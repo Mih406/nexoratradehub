@@ -1,14 +1,21 @@
-app.js 
-const authForm = document.querySelector("#authForm");
-const authMessage = document.querySelector("#authMessage");
+app.js
 
-if (authForm) {
-  authForm.addEventListener("submit", function (event) {
-    event.preventDefault();
+function handleAuth(event) {
+  event.preventDefault();
 
-    if (authMessage) {
-      authMessage.textContent =
-        "Account registration is not connected yet. Please try again later.";
-    }
-  });
+  const authMessage = document.querySelector("#authMessage");
+
+  if (authMessage) {
+    authMessage.textContent =
+      "Account registration is not connected yet. Please try again later.";
+  }
+}
+
+function toggleAuth() {
+  const authMessage = document.querySelector("#authMessage");
+
+  if (authMessage) {
+    authMessage.textContent =
+      "Sign-in is not connected yet. Please try again later.";
+  }
 }
