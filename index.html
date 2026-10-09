@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Nexora TradeHub — a modern synthetic-market trading dashboard demo.">
+  <title>Nexora TradeHub — Market Trading Demo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="nav">
+    <a class="brand" href="#"><span class="brand-mark">NX</span> NEXORA TRADEHUB<span class="dot">.</span></a>
+    <nav>
+      <a href="#markets">Markets</a>
+      <a href="#how">How it works</a>
+      <a href="#features">Features</a>
+    </nav>
+    <div class="nav-actions">
+      <a id="adminLink" class="login hidden" href="#admin">Admin</a>
+      <a class="login" href="#auth" onclick="showAuth('login')">Sign in</a>
+      <a class="button small" href="#auth" onclick="showAuth('register')">Open account</a>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="eyebrow"><span class="pulse"></span> NEXORA TRADEHUB · Synthetic markets · Demo environment</div>
+      <h1>Trade the move.<br><em>Know the risk.</em></h1>
+      <p class="hero-copy">A clean, fast interface for exploring synthetic volatility markets and short-duration contract mechanics — with virtual funds only.</p>
+      <div class="hero-actions">
+        <a class="button" href="#demo">Try the demo <span>↗</span></a>
+        <a class="ghost" href="#markets">Explore markets <span>↓</span></a>
+      </div>
+
+      <div class="ticker-wrap">
+        <div class="ticker-label">LIVE DEMO FEED</div>
+        <div class="ticker" id="ticker"></div>
+      </div>
+    </section>
+
+    <section id="markets" class="section markets-section">
+      <div class="section-head">
+        <div><span class="kicker">01 / Markets</span><h2>Watch the<br><em>volatility.</em></h2></div>
+        <p>Practice with synthetic indices designed to move around the clock. Prices below are simulated for this demo.</p>
+      </div>
+      <div class="market-grid" id="marketGrid"></div>
+    </section>
+
+    <section id="how" class="section split">
+      <div class="sticky-title">
+        <span class="kicker">02 / Mechanics</span>
+        <h2>Simple rules.<br><em>Clear outcomes.</em></h2>
+      </div>
+      <div class="steps">
+        <article><span>01</span><div><h3>Choose a market</h3><p>Select a synthetic index and review its current demo price and movement.</p></div></article>
+        <article><span>02</span><div><h3>Set your stake</h3><p>Use virtual funds to test how a fixed-risk contract behaves before committing real capital elsewhere.</p></div></article>
+        <article><span>03</span><div><h3>Pick an outcome</h3><p>Explore rise/fall and digit-style examples with an easy-to-understand payoff preview.</p></div></article>
+        <article><span>04</span><div><h3>Review the result</h3><p>Every demo position is logged locally so you can study your decisions and refine a strategy.</p></div></article>
+      </div>
+    </section>
+
+    <section id="features" class="section features">
+      <div class="section-head compact">
+        <div><span class="kicker">03 / Platform</span><h2>Built for<br><em>clarity.</em></h2></div>
+      </div>
+      <div class="feature-grid">
+        <div class="feature-card large"><span>01</span><h3>Fixed-risk previews</h3><p>See maximum simulated loss and potential return before opening a demo position.</p><div class="mini-chart"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div>
+        <div class="feature-card"><span>02</span><h3>Fast market cards</h3><p>Key data stays visible without overwhelming the screen.</p></div>
+        <div class="feature-card"><span>03</span><h3>Local trade history</h3><p>Review your demo activity directly in the browser.</p></div>
+        <div class="feature-card"><span>04</span><h3>Responsive by design</h3><p>Designed for desktop, tablet and mobile screens.</p></div>
+      </div>
+    </section>
+
+    <section id="account" class="section account-section hidden">
+      <div class="account-head"><div><span class="kicker">05 / Dashboard</span><h2>Welcome, <em id="userName">Trader</em>.</h2><p>Your NEXORA TRADEHUB demo account is ready. Everything here uses virtual funds and server-side demo data.</p></div><button class="ghost-button" onclick="logout()">Log out</button></div>
+      <div class="dashboard-grid">
+        <div class="dash-card"><span>AVAILABLE BALANCE</span><strong id="dashBalance">$10,000.00</strong><small>Virtual funds</small></div>
+        <div class="dash-card"><span>DEMO POSITIONS</span><strong id="tradeCount">0</strong><small>Local history</small></div>
+        <div class="dash-card"><span>ACCOUNT STATUS</span><strong class="status">ACTIVE</strong><small>Demo environment</small></div>
+      </div>
+      <div class="history-card"><div class="history-head"><h3>Recent activity</h3><button class="ghost-button" onclick="clearHistory()">Clear history</button></div><div id="tradeHistory" class="history-list"><p class="empty">No demo trades yet.</p></div></div>
+    </section>
+
+    <section id="admin" class="section admin-section hidden">
+      <div class="account-head"><div><span class="kicker">06 / Administration</span><h2>NEXORA TRADEHUB <em>control center.</em></h2><p>Restricted demo administration area for monitoring accounts, virtual balances, and simulated activity.</p></div><div id="adminMessage" class="form-message"></div></div>
+      <div class="dashboard-grid">
+        <div class="dash-card"><span>REGISTERED USERS</span><strong id="adminUsers">0</strong><small>All demo accounts</small></div>
+        <div class="dash-card"><span>SIMULATED TRADES</span><strong id="adminTrades">0</strong><small>All users</small></div>
+        <div class="dash-card"><span>VIRTUAL BALANCES</span><strong id="adminBalance">$0.00</strong><small>Total demo funds</small></div>
+      </div>
+      <div class="history-card"><div class="history-head"><h3>User accounts</h3></div><div class="table-wrap"><table><thead><tr><th>Name</th><th>Email</th><th>Role</th><th>Balance</th><th>Action</th></tr></thead><tbody id="adminUserRows"></tbody></table></div></div>
+      <div class="history-card"><div class="history-head"><h3>Recent simulated trades</h3></div><div class="table-wrap"><table><thead><tr><th>User</th><th>Direction</th><th>Result</th><th>Time</th></tr></thead><tbody id="adminTradeRows"></tbody></table></div></div>
+    </section>
+
+    <section id="auth" class="section auth-section">
+      <div class="auth-card">
+        <div class="auth-copy"><span class="kicker">NEXORA TRADEHUB ACCOUNT</span><h2 id="authTitle">Create your<br><em>demo account.</em></h2><p>Register or sign in to access your private dashboard. Credentials are processed by the NEXORA TRADEHUB demo backend and passwords are hashed before storage.</p></div>
+        <form id="authForm" onsubmit="handleAuth(event)">
+          <label id="nameField">Full name<input id="name" autocomplete="name" placeholder="Your name"></label>
+          <label>Email<input id="email" type="email" autocomplete="email" placeholder="you@example.com" required></label>
+          <label>Password<input id="password" type="password" autocomplete="current-password" placeholder="At least 8 characters" minlength="8" required></label>
+          <button class="button" type="submit" id="authSubmit">Create account <span>↗</span></button>
+          <p id="authMessage" class="form-message"></p>
+          <button class="text-button" type="button" onclick="toggleAuth()" id="authToggle">Already have an account? Sign in</button>
+        </form>
+      </div>
+    </section>
+
+    <section id="terminal" class="section terminal-section">
+      <div class="section-head compact">
+        <div><span class="kicker">04 / Trading terminal</span><h2>Read the move.<br><em>Practice the setup.</em></h2></div>
+        <p>Interactive market simulation with virtual funds only. Prices and chart candles are generated locally for practice.</p>
+      </div>
+      <div class="terminal-shell">
+        <div class="terminal-topbar">
+          <div class="terminal-market">
+            <span class="live-dot"></span><span>Volatility 50</span><strong id="terminalPrice">654.21</strong><span id="terminalChange" class="up">+0.00%</span>
+          </div>
+          <div class="timeframes"><button class="active" data-tf="1m">1m</button><button data-tf="5m">5m</button><button data-tf="15m">15m</button><button data-tf="1h">1h</button></div>
+        </div>
+        <div class="terminal-main">
+          <div class="chart-panel">
+            <div class="chart-meta"><span>SIMULATED PRICE</span><span id="chartClock">Live</span></div>
+            <canvas id="priceChart" height="360"></canvas>
+          </div>
+          <aside class="order-panel">
+            <div class="order-tabs"><button class="active">Rise / Fall</button><span>DEMO</span></div>
+            <label>Market<select id="terminalMarket"><option>Volatility 50</option><option>Volatility 25</option><option>Volatility 75</option><option>Volatility 100</option></select></label>
+            <label>Stake<input id="stakeInput" type="number" min="1" max="1000" step="1" value="10"></label>
+            <div class="payoff"><span>Potential return</span><strong id="potentialReturn">$18.50</strong><small>Illustrative demo payout</small></div>
+            <div class="direction-buttons"><button class="rise" onclick="placeTerminalTrade('RISE')"><span>↗</span><b>RISE</b><small>Price goes up</small></button><button class="fall" onclick="placeTerminalTrade('FALL')"><span>↘</span><b>FALL</b><small>Price goes down</small></button></div>
+            <div id="terminalResult" class="terminal-result">Sign in to place a simulated trade.</div>
+            <p class="risk-note">Demo only. No real orders, deposits, withdrawals, or financial execution.</p>
+          </aside>
+        </div>
+        <div class="terminal-bottom"><div><span>24h high</span><b id="highValue">0.00</b></div><div><span>24h low</span><b id="lowValue">0.00</b></div><div><span>Market status</span><b class="up">OPEN · 24/7</b></div><div><span>Simulation</span><b>Virtual funds</b></div></div>
+      </div>
+    </section>
+
+    <section id="demo" class="section demo-section">
+      <div class="demo-card">
+        <div>
+          <span class="kicker">NEXORA TRADEHUB DEMO ACCOUNT</span>
+          <h2>Start with <em>$10,000</em><br>in virtual funds.</h2>
+          <p>No deposits. No withdrawals. No real-money orders — just a realistic interface for learning and prototyping.</p>
+        </div>
+        <div class="demo-panel">
+          <div class="balance-label">AVAILABLE BALANCE</div>
+          <div class="balance">$10,000.00</div>
+          <div class="demo-row"><span>Volatility 50</span><b id="demoPrice">654.21</b></div>
+          <div class="demo-row"><span>Demo stake</span><b>$10.00</b></div>
+          <div class="demo-buttons"><button onclick="simulate('UP')">RISE</button><button onclick="simulate('DOWN')">FALL</button></div>
+          <div id="result" class="result">Choose a direction to simulate a trade.</div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="brand">NEXORA TRADEHUB<span class="dot">.</span></div>
+    <p>Educational interface demo · Not a broker · No real-money trading.</p>
+    <div class="footer-links"><a href="#">Privacy</a><a href="#">Terms</a><a href="#">Risk notice</a></div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
