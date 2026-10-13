@@ -41,6 +41,23 @@ async function handleAuth(event) {
     authMessage.textContent = isSignUp
       ? "Registration submitted. Check your email if verification is required."
       : "Sign-in successful.";
+    
+    if (!isSignUp && result.data.session) {
+      document.querySelector("#auth")?.classList.add("hidden");
+      document.querySelector("#account")?.classList.remove("hidden");
+
+      const userName = document.querySelector("#userName");
+      if (userName) {
+        userName.textContent =
+          result.data.user?.user_metadata?.full_name ||
+          email.split("@")[0];
+      }
+
+      document.querySelector("#account")?.scrollIntoView({
+        behavior: "smooth"
+      });
+    }
+
 
   } catch (error) {
     authMessage.textContent =
